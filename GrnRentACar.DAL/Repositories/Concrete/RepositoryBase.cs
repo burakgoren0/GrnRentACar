@@ -20,7 +20,7 @@ namespace GrnRentACar.DAL.Repositories.Concrete
 			int sonuc = 0;
 			try
 			{
-				db.Set<T>().AddAsync(entity);
+				await db.Set<T>().AddAsync(entity);
 				sonuc = await db.SaveChangesAsync();
 			}
 			catch (Exception ex)

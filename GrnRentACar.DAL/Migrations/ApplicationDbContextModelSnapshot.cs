@@ -182,6 +182,23 @@ namespace GrnRentACar.DAL.Migrations
                     b.ToTable("Rentals");
                 });
 
+            modelBuilder.Entity("GrnRentACar.Entities.Concrete.Roles", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("GrnRentACar.Entities.Concrete.User", b =>
                 {
                     b.Property<int>("Id")
@@ -195,10 +212,6 @@ namespace GrnRentACar.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Roles")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -280,6 +293,21 @@ namespace GrnRentACar.DAL.Migrations
                     b.ToTable("VehicleCategories");
                 });
 
+            modelBuilder.Entity("RolesUser", b =>
+                {
+                    b.Property<int>("RolesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RolesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("RolesUser");
+                });
+
             modelBuilder.Entity("EmployeeOffice", b =>
                 {
                     b.HasOne("GrnRentACar.Entities.Concrete.Employee", null)
@@ -339,6 +367,21 @@ namespace GrnRentACar.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("VehicleCategory");
+                });
+
+            modelBuilder.Entity("RolesUser", b =>
+                {
+                    b.HasOne("GrnRentACar.Entities.Concrete.Roles", null)
+                        .WithMany()
+                        .HasForeignKey("RolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GrnRentACar.Entities.Concrete.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("GrnRentACar.Entities.Concrete.Customer", b =>
