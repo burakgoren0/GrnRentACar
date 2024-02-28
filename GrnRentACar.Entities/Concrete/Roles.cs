@@ -1,8 +1,11 @@
-﻿namespace GrnRentACar.Entities.Concrete
+﻿using GrnRentACar.DAL.Repositories.Abstract;
+
+namespace GrnRentACar.Entities.Concrete
 {
-	public enum Roles
+	public class Roles : BaseEntity<int>
 	{
-		Admin = 1,
-		Customer,
+		public string RoleName { get; set; }
+		public virtual ICollection<User> Users { get; set; }
+
 	}
 }
